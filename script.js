@@ -28,7 +28,14 @@ function addMovieDetail(data){
     $target.empty();
     $target.append("<h2>Sorry, never heard of it!</h2>")
   }
+    if (data.Title !== undefined && data.Poster === "N/A") {
+    $target.empty();
+      $target.append("<img src=http://i.imgur.com/rXuQiCm.jpg?1></img>");
+      $target.append("<h2>" + data.Title + "</h2>");
+      $target.append("<h3>" + data.Year + "</h3>");
+      $target.append("<h3>" + data.Rated + "</h3>");
 }
+};
 
 
 
