@@ -1,4 +1,11 @@
-.search-form{
+/* searchBar styles */
+.search-form, .movie-details{
   text-align: center;
   margin: 100px auto 0;
 }
+
+img{
+  float: left;
+  margin-left: 20px;
+}
+
