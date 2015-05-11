@@ -1,2 +1,1 @@
-var div = $('div').html('hey');
-
+var API_URL = 'http://www.omdbapi.com/?';
