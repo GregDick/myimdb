@@ -2,6 +2,8 @@ var omdb_URL = 'http://www.omdbapi.com/?';
 var $searchForm = $('.search-form');
 var $searchBar = $('input[name=search]')[0];
 var FIREBASE_URL = "https://movie-appp.firebaseio.com/movie-appp.json";
+var $movieDetails = $(".movie-details");
+
 
 //function to retrieve movie JSON file and add to html
 $searchForm.on('submit', function(){
@@ -9,9 +11,7 @@ $searchForm.on('submit', function(){
   var url = omdb_URL + "t=" + movie + "&r=json";
   console.log(url);
   $.get(url, function(data){
-   // console.log(data);
     addMovieDetail(data);
-  //  addTableDetail(data);
   })
   return false;
 })
@@ -33,22 +33,19 @@ function addMovieDetail(data){
     $target.append("<h2> IMDB Rating: " + data.imdbRating + "</h2>");
 
     $target.append("<button class='add-movie'>Add Movie</button>");
-
-
     }
-}
-    var $addBtn = $(".add-movie");
+};
 
-    $addBtn.click(function() {
-      var movie = $searchBar.value;
-      var url = omdb_URL + "t=" + movie + "&r=json";
-      $.get(url, function (data) {
-        $.post(FIREBASE_URL, JSON.stringify(data));
-        addTableDetail(data);
+//posts movie object to firebase and calls addTableDetail()
+$movieDetails.on('click', '.add-movie', function() {
+  //note: must be in this format because the .add-movie button is dynamically created
+  var movie = $searchBar.value;
+  var url = omdb_URL + "t=" + movie + "&r=json";
+  $.get(url, function (data) {
+    $.post(FIREBASE_URL, JSON.stringify(data));
+    addTableDetail(data);
     }, 'jsonp');
  });
-
-
 
 //function to append a row to the table
 function addTableDetail(data){
