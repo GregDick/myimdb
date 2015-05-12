@@ -29,6 +29,12 @@ function addMovieDetail(data){
     $target.append("<h1>" + data.Title + "</h1>");
     $target.append("<h2> Year: " + data.Year + "</h2>");
     $target.append("<h2> IMDB Rating: " + data.imdbRating + "</h2>");
+
+    $target.append("<button class='add-movie'>Add Movie</button>");
+    var $addBtn = $(".add-movie");
+    $addBtn.click( function() {
+
+    });
   }
 };
 
