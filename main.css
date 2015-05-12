@@ -1,4 +1,18 @@
+/* searchBar styles */
+.search-form, .movie-details{
+  text-align: center;
+  margin: 100px auto 0;
+}
+
+img{
+  float: left;
+  margin-left: 20px;
+}
+
+/* table styles */
+
 .table-container{
   width: 75%;
   margin: 50px auto 0;
 }
+
