@@ -5,6 +5,15 @@ var FIREBASE_URL = "https://movie-appp.firebaseio.com/movie-appp.json";
 var $movieDetails = $(".movie-details");
 
 
+//function to get firebase data and add to table on page load
+$.get(FIREBASE_URL, function(data){
+  console.log(Object.keys(data));
+  Object.keys(data).forEach(function(id){
+    addTableDetail(data[id], id);
+  })
+});
+
+
 //function to retrieve movie JSON file and add to html
 $searchForm.on('submit', function(){
   var movie = $searchBar.value;
@@ -42,16 +51,18 @@ $movieDetails.on('click', '.add-movie', function() {
   var movie = $searchBar.value;
   var url = omdb_URL + "t=" + movie + "&r=json";
   $.get(url, function (data) {
-    $.post(FIREBASE_URL, JSON.stringify(data));
-    addTableDetail(data);
+    $.post(FIREBASE_URL, JSON.stringify(data), function(res){
+      addTableDetail(data, res.name);
+      });
     }, 'jsonp');
  });
 
 //function to append a row to the table
-function addTableDetail(data){
+function addTableDetail(data, id){
   var $table = $("table");
   $table.append("<tr></tr>");
   var $target = $("tr:last");
+  $target.attr("data-id", id);
   var poster = data.Poster === "N/A" ? "http://i.imgur.com/rXuQiCm.jpg?1" : data.Poster;
   $target.append("<td><img src=" + poster + "></img></td>");
   $target.append("<td>"+ data.Title +"</td>");
