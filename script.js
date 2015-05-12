@@ -10,6 +10,7 @@ $searchForm.on('submit', function(){
   $.get(url, function(data){
     console.log(data);
     addMovieDetail(data);
+    addTableDetail(data);
   })
   return false;
 })
@@ -31,10 +32,20 @@ function addMovieDetail(data){
     $target.append("<h2> IMDB Rating: " + data.imdbRating + "</h2>");
 
     $target.append("<button class='add-movie'>Add Movie</button>");
-    var $addBtn = $(".add-movie");
-    $addBtn.click( function() {
-
-    });
-  }
+    }
 };
+
+//function to append a row to the table
+function addTableDetail(data){
+  var $table = $("table");
+  $table.append("<tr></tr>");
+  var $target = $("tr:last");
+  var poster = data.Poster === "N/A" ? "http://i.imgur.com/rXuQiCm.jpg?1" : data.Poster;
+  $target.append("<td><img src=" + poster + "></img></td>");
+  $target.append("<td>"+ data.Title +"</td>");
+  $target.append("<td>"+ data.Year +"</td>");
+  $target.append("<td>"+ data.imdbRating +"</td>");
+  $target.append("<button class='btn btn-success'>"+ "&#10003" +"</button>");
+}
+
 
