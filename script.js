@@ -18,23 +18,18 @@ $searchForm.on('submit', function(){
 //function to add JSON data to html
 function addMovieDetail(data){
   var $target = $(".movie-details");
-  $target.empty();
-  $target.append("<img src=" + data.Poster + "></img>")
-  $target.append("<h1>" + data.Title + "</h1>");
-  $target.append("<h2> Year: " + data.Year + "</h2>");
-  $target.append("<h2> IMDB Rating: " + data.imdbRating + "</h2>");
 
   if (data.Title === undefined) {
     $target.empty();
-    $target.append("<h2>Sorry, never heard of it!</h2>")
-  }
-    if (data.Title !== undefined && data.Poster === "N/A") {
+    $target.append("<h2>Sorry, never heard of it!</h2>");
+  } else {
+    var poster = data.Poster === "N/A" ? "http://i.imgur.com/rXuQiCm.jpg?1" : data.Poster;
     $target.empty();
-      $target.append("<img src=http://i.imgur.com/rXuQiCm.jpg?1></img>");
-      $target.append("<h2>" + data.Title + "</h2>");
-      $target.append("<h3>" + data.Year + "</h3>");
-      $target.append("<h3>" + data.Rated + "</h3>");
-}
+    $target.append("<img src=" + poster + "></img>");
+    $target.append("<h1>" + data.Title + "</h1>");
+    $target.append("<h2> Year: " + data.Year + "</h2>");
+    $target.append("<h2> IMDB Rating: " + data.imdbRating + "</h2>");
+  }
 };
 
 
