@@ -1,6 +1,7 @@
 var omdb_URL = 'http://www.omdbapi.com/?';
 var $searchForm = $('.search-form');
 var $searchBar = $('input[name=search]')[0];
+var FIREBASE_URL = "https://movie-appp.firebaseio.com/movie-appp.json";
 
 //function to retrieve movie JSON file and add to html
 $searchForm.on('submit', function(){
@@ -8,7 +9,7 @@ $searchForm.on('submit', function(){
   var url = omdb_URL + "t=" + movie + "&r=json";
   console.log(url);
   $.get(url, function(data){
-    console.log(data);
+   // console.log(data);
     addMovieDetail(data);
   })
   return false;
@@ -33,6 +34,17 @@ function addMovieDetail(data){
     $target.append("<button class='add-movie'>Add Movie</button>");
     var $addBtn = $(".add-movie");
     $addBtn.click( function() {
+      var movie = $searchBar.value;
+      var url = omdb_URL + "t=" + movie + "&r=json";
+       $.get(url, function (data) {
+         $.post(FIREBASE_URL, JSON.stringify(data));
+         addToList(data);
+  }, 'jsonp');
+
+
+      function addToList(data) {
+        console.log(data.Title);
+      };
 
     });
   }
