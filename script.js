@@ -71,7 +71,7 @@ function addTableDetail(data, id){
   $target.append("<td>"+ data.Title +"</td>");
   $target.append("<td>"+ data.Year +"</td>");
   $target.append("<td>"+ data.imdbRating +"</td>");
-  $target.append("<button class='btn btn-success'>"+ "&#10003" +"</button>");
+  $target.append("<td><button class='btn btn-success'>"+ "&#10003" +"</button></td>");
 }
 
 
