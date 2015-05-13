@@ -7,10 +7,13 @@ var $table = $("table");
 
 //function to get firebase data and add to table on page load
 $.get(FIREBASE_URL, function(data){
-  console.log(Object.keys(data));
-  Object.keys(data).forEach(function(id){
-    addTableDetail(data[id], id);
-  })
+    if (data===null){
+    $table.hide(); //hides table if firebase is empty
+  }else{
+    Object.keys(data).forEach(function(id){
+      addTableDetail(data[id], id);
+    });
+  }
 });
 
 
@@ -41,7 +44,7 @@ function addMovieDetail(data){
     $target.append("<h2> Year: " + data.Year + "</h2>");
     $target.append("<h2> IMDB Rating: " + data.imdbRating + "</h2>");
 
-    $target.append("<button class='add-movie'>Add Movie</button>");
+    $target.append("<button class='btn btn-lg btn-primary add-movie'>Add Movie</button>");
     }
 };
 
@@ -59,6 +62,7 @@ $movieDetails.on('click', '.add-movie', function() {
 
 //function to append a row to the table
 function addTableDetail(data, id){
+  $table.show();
   $table.append("<tr></tr>");
   var $target = $("tr:last");
   $target.attr("data-id", id);
