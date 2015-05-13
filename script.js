@@ -63,7 +63,7 @@ $movieDetails.on('click', '.add-movie', function() {
 //function to append a row to the table
 function addTableDetail(data, id){
   $table.show();
-  $table.append("<tr></tr>");
+  $table.append("<tr class='hide-rows'></tr>");
   var $target = $("tr:last");
   $target.attr("data-id", id);
   var poster = data.Poster === "N/A" ? "http://i.imgur.com/rXuQiCm.jpg?1" : data.Poster;
