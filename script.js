@@ -3,7 +3,7 @@ var $searchForm = $('.search-form');
 var $searchBar = $('input[name=search]')[0];
 var FIREBASE_URL = "https://movie-appp.firebaseio.com/movie-appp.json";
 var $movieDetails = $(".movie-details");
-
+var $table = $("table");
 
 //function to get firebase data and add to table on page load
 $.get(FIREBASE_URL, function(data){
@@ -59,7 +59,6 @@ $movieDetails.on('click', '.add-movie', function() {
 
 //function to append a row to the table
 function addTableDetail(data, id){
-  var $table = $("table");
   $table.append("<tr></tr>");
   var $target = $("tr:last");
   $target.attr("data-id", id);
@@ -70,5 +69,19 @@ function addTableDetail(data, id){
   $target.append("<td>"+ data.imdbRating +"</td>");
   $target.append("<button class='btn btn-success'>"+ "&#10003" +"</button>");
 }
+
+
+//deletes row from table and firebase
+$table.on('click', 'button', function(){
+  var $movie = $(this).closest('tr');
+  var $id = $movie.attr('data-id');
+  $movie.remove();
+  var deleteURL = FIREBASE_URL.slice(0, -5) + '/' + $id + '.json';
+  $.ajax({
+  url: deleteURL,
+  type: 'DELETE'
+  });
+})
+
 
 
