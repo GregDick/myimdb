@@ -8,17 +8,35 @@
     <link rel="stylesheet" type="text/css" href="main.css">
   </head>
   <body>
-
-    <h1> "Beau Test please work" </h1>
-
-    <h1>Greg's Changes</h1>
-
-     <!--end-->
+    <div class="welcome col-md-4 col-md-offset-4">
+      <button class="logout btn btn-block">Logout</button>
+    </div>
+    <div class="get-movie row">
+      <form class="search-form">
+        <input name="search" placeholder="Movie..." required/>
+        <input type="submit" name="get" value="Search" />
+      </form>
+    </div>
+    <div class="movie-details">
+      <!--receives input from addMovieDetail() -->
+    </div>
+    <div class="table-container">
+      <table class="table table-hover">
+        <tr>
+          <th>Poster</th>
+          <th>Title</th>
+          <th>Year</th>
+          <th>IMDB Rating</th>
+          <th>Watched</th>
+        </tr>
+        <!-- use jquery to append rows and "watched" button here -->
+      </table>
+    </div>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="script.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.8.0/lodash.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
+    <script src="script.js"></script>
   </body>
-
-
 </html>
 
