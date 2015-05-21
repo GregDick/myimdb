@@ -43,10 +43,19 @@ table img{
 
 /*login page styles*/
 
+.hidden{
+  display: none;
+}
+
 .onLoggedOut{
   margin: auto;
 }
 
+.login button{
+  margin-bottom: 5px;
+}
 
-
+.onRegistered h1{
+  text-align: center;
+}
 

@@ -5,13 +5,12 @@ var fb = new Firebase(FIREBASE_AUTH);
 var $email = $("input[type='email']");
 var $password = $("input[type='password']");
 
-$(".onRegistered").hide();
 
 $(".login").submit(function(){
   doLogin();
   fb.onAuth(function(authData){
     if(authData){
-      window.location.href = "/";
+      window.location.pathname = "/";
     }
     else{}
   })
@@ -27,7 +26,7 @@ $(".register").click(function(){
       console.log(err);
     } else{
         $(".onLoggedOut").hide();
-        $(".onRegistered").show();
+        $(".onRegistered").removeClass("hidden");
         $(".onRegistered").append("<h1>Congratulations! You\'ve registered as "+userData.uid+"</h1>");
         doLogin();
       }
@@ -44,22 +43,20 @@ function doLogin(){
     if(error){
       alert(error);
     }
-    else{
-      $(".onRegistered").show();
-    }
+    else{}
   })
 }
 
 
 // ==========start movie app Javascript==========
 
-if(window.location.href === "http://localhost:8080/"){
+if(window.location.pathname === "/"){
   fb.onAuth(function(authData){
     if(authData){
       $(".welcome").append("<h4>Welcome " + authData.password.email + "</h4>");
     }
     else{
-      window.location.href = "http://localhost:8080/login";
+      window.location.pathname = "/login/login.html";
     }
   })
 }
@@ -134,7 +131,7 @@ $movieDetails.on('click', '.add-movie', function() {
 //function to append a row to the table
 function addTableDetail(data, id){
   $table.show();
-  $table.append("<tr class='hide-rows'></tr>");
+  $table.append("<tr></tr>");
   var $target = $("tr:last");
   $target.attr("data-id", id);
   var poster = data.Poster === "N/A" ? "http://i.imgur.com/rXuQiCm.jpg?1" : data.Poster;
