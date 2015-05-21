@@ -15,10 +15,18 @@
           <input type="password" placeholder="Password"/>
           <button type="submit" class="btn btn-lg">Login</button>
           <button class="register btn btn-lg">Register</button>
+          <button class="reset btn btn-lg">Reset Password</button>
         </form>
       </div>
       <div class="onRegistered hidden">
         <button class="continue btn btn-block"><a href="/">Continue to My Movie Database<a></button>
+      </div>
+      <div class="onTempPassword hidden">
+        <form>
+          <input type="password" placeholder="Current Password"/>
+          <input type="password" placeholder="New Password"/>
+          <button class="btn btn-lg" type="submit">Change Password</button>
+        </form>
       </div>
     </div>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>

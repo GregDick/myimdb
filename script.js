@@ -6,14 +6,9 @@ var $email = $("input[type='email']");
 var $password = $("input[type='password']");
 
 
+
 $(".login").submit(function(){
-  doLogin();
-  fb.onAuth(function(authData){
-    if(authData){
-      window.location.pathname = "/";
-    }
-    else{}
-  })
+  doLogin(saveUserData);
   event.preventDefault();
 })
 
@@ -23,7 +18,7 @@ $(".register").click(function(){
     password: $password.val()
   }, function(err, userData){
     if(err){
-      console.log(err);
+      alert(err.toString());
     } else{
         $(".onLoggedOut").hide();
         $(".onRegistered").removeClass("hidden");
@@ -31,19 +26,80 @@ $(".register").click(function(){
         doLogin();
       }
   })
-  event.preventDefault();
+})
+
+$(".reset").click(function(){
+  fb.resetPassword({
+    email: $email.val()
+  }, function (err) {
+    if (err) {
+      alert(err.toString());
+    } else {
+      alert('Check your email!');
+    }
+  });
 })
 
 
-function doLogin(){
+$(".onTempPassword form").submit(function(){
+  var email = fb.getAuth().password.email;
+  var $curPass = $(".onTempPassword form input:first");
+  var $newPass = $(".onTempPassword form input:last");
+
+  fb.changePassword({
+    email: email,
+    oldPassword: $curPass.val(),
+    newPassword: $newPass.val()
+  }, function(err){if (err) {
+      alert(err.toString());
+    } else {
+      fb.unauth();
+      alert("Successfully changed password");
+      checkStatus();
+      $email.val("");
+      $password.val("");
+    }
+  })
+  event.preventDefault();
+});
+
+function doLogin(cb){
   fb.authWithPassword({
     email: $email.val(),
     password: $password.val()
   }, function(error, authData){
-    if(error){
-      alert(error);
+      if(error){
+        alert(error.toString());
+      }
+      else{
+        typeof cb === 'function' && cb(authData);
+      }
     }
-    else{}
+  )
+}
+
+function checkStatus(){
+  if(window.location.pathname = "/login/login.html"){
+    fb.onAuth(function(authData){
+      if(authData && authData.password.isTemporaryPassword){
+        $(".onTempPassword").removeClass("hidden");
+        $(".onLoggedOut").addClass("hidden");
+      } else if(authData){
+        window.location.pathname = "/";
+      } else{
+        $(".onTempPassword").addClass("hidden");
+        $(".onLoggedOut").removeClass("hidden");
+      }
+    })
+  }else{}
+}
+
+function saveUserData(authData){
+  $.ajax({
+    method: "PUT",
+    url: FIREBASE_AUTH + "users/" + authData.uid + "/profile.json",
+    data: JSON.stringify(authData),
+    success: checkStatus
   })
 }
 
