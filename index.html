@@ -7,7 +7,10 @@
     <link rel="stylesheet" type="text/css" href="main.css">
   </head>
   <body>
-    <div class="get-movie">
+    <div class="welcome col-md-4 col-md-offset-4">
+      <button class="logout btn btn-block">Logout</button>
+    </div>
+    <div class="get-movie row">
       <form class="search-form">
         <input name="search" placeholder="Movie..." required/>
         <input type="submit" name="get" value="Search" />
@@ -32,6 +35,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.8.0/lodash.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
     <script src="script.js"></script>
   </body>
 </html>

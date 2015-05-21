@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My IMDB</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="col-md-10 onLoggedOut">
+        <h1>Login</h1>
+        <form class="login">
+          <input type="email" placeholder="Email"/>
+          <input type="password" placeholder="Password"/>
+          <button type="submit">Login</button>
+          <button class="register">Register</button>
+        </form>
+      </div>
+      <div class="onRegistered">
+        <button class="continue btn btn-block"><a href="/">Continue to My Movie Database<a></button>
+      </div>
+    </div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.8.0/lodash.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
+    <script src="../script.js"></script>
+  </body>

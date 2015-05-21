@@ -1,9 +1,80 @@
+// ==========login page Javascript==========
+var FIREBASE_AUTH = "https://movie-appp.firebaseio.com/"
+var fb = new Firebase(FIREBASE_AUTH);
+
+var $email = $("input[type='email']");
+var $password = $("input[type='password']");
+
+$(".onRegistered").hide();
+
+$(".login").submit(function(){
+  doLogin();
+  fb.onAuth(function(authData){
+    if(authData){
+      window.location.href = "/";
+    }
+    else{}
+  })
+  event.preventDefault();
+})
+
+$(".register").click(function(){
+  fb.createUser({
+    email: $email.val(),
+    password: $password.val()
+  }, function(err, userData){
+    if(err){
+      console.log(err);
+    } else{
+        $(".onLoggedOut").hide();
+        $(".onRegistered").show();
+        $(".onRegistered").append("<h1>Congratulations! You\'ve registered as "+userData.uid+"</h1>");
+        doLogin();
+      }
+  })
+  event.preventDefault();
+})
+
+
+function doLogin(){
+  fb.authWithPassword({
+    email: $email.val(),
+    password: $password.val()
+  }, function(error, authData){
+    if(error){
+      alert(error);
+    }
+    else{
+      $(".onRegistered").show();
+    }
+  })
+}
+
+
+// ==========start movie app Javascript==========
+
+if(window.location.href === "http://localhost:8080/"){
+  fb.onAuth(function(authData){
+    if(authData){
+      $(".welcome").append("<h4>Welcome " + authData.password.email + "</h4>");
+    }
+    else{
+      window.location.href = "http://localhost:8080/login";
+    }
+  })
+}
+
+$(".logout").click(function(){
+  fb.unauth();
+})
+
 var omdb_URL = 'http://www.omdbapi.com/?';
 var $searchForm = $('.search-form');
 var $searchBar = $('input[name=search]')[0];
 var FIREBASE_URL = "https://movie-appp.firebaseio.com/movie-appp.json";
 var $movieDetails = $(".movie-details");
 var $table = $("table");
+
 
 //function to get firebase data and add to table on page load
 $.get(FIREBASE_URL, function(data){

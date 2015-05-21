@@ -1,3 +1,9 @@
+/*welcome header styles*/
+h4{
+  text-align: center;
+}
+
+
 /* searchBar styles */
 .search-form, .movie-details{
   text-align: center;
@@ -34,4 +40,13 @@ table img{
   max-height: 100px;
   padding-left: 10%;
 }
+
+/*login page styles*/
+
+.onLoggedOut{
+  margin: auto;
+}
+
+
+
 
