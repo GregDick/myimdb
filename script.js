@@ -78,7 +78,7 @@ if(window.location.pathname === "/"){
       userToken = authData.token;
     }
     else{
-      window.location.pathname = "/login/login.html";
+      window.location.pathname = "login/login.html";
     }
   });
 }
@@ -103,7 +103,7 @@ function doLogin(cb){
 }
 
 function checkStatus(){
-  if(window.location.pathname = "/login/login.html"){
+  if(window.location.pathname = "login/login.html"){
     fb.onAuth(function(authData){
       if(authData && authData.password.isTemporaryPassword){
         $(".onTempPassword").removeClass("hidden");
@@ -119,12 +119,8 @@ function checkStatus(){
 }
 
 function saveUserData(authData){
-  $.ajax({
-    method: "PUT",
-    url: FIREBASE_AUTH + "users/" + authData.uid + "/profile.json?auth=" + authData.token,
-    data: JSON.stringify(authData),
-    success: checkStatus
-  })
+  var fbURL = fb.child("users/" + authData.uid + "/profile");
+  fbURL.set(authData, checkStatus);
 }
 
 
@@ -133,23 +129,21 @@ function saveUserData(authData){
 var omdb_URL = 'http://www.omdbapi.com/?';
 var $searchForm = $('.search-form');
 var $searchBar = $('input[name=search]')[0];
-var FIREBASE_URL = "https://allthemovies.firebaseio.com/users/"+ userID +"/movies.json?auth="+ userToken;
+var FIREBASE_URL = FIREBASE_AUTH + "users/" + userID + "/movies.json?auth=" + userToken;
 var userID;
 var userToken;
+var fbMovies;
 var $movieDetails = $(".movie-details");
 var $table = $("table");
 
 
 //function to get firebase data and add to table on page load if logged in
 if(userID){
-  $.get(FIREBASE_URL, function(data){
-    if (data===null){
-      $table.hide(); //hides table if firebase is empty
-    }else{
-      Object.keys(data).forEach(function(id){
-        addTableDetail(data[id], id);
-      });
-    }
+  fbMovies = fb.child('users/'+userID+'/movies');
+  fbMovies.on('child_added', function(snapshot){
+    var obj = {};
+    obj[snapshot.key()] = snapshot.val();
+    addTableDetail(obj);
   });
 }
 
@@ -174,8 +168,8 @@ function addMovieDetail(data){
     $target.empty();
     $target.append("<h2>Sorry, never heard of it!</h2>");
   } else {
-    var poster = data.Poster === "N/A" ? "http://i.imgur.com/rXuQiCm.jpg?1" : data.Poster;
     $target.empty();
+    var poster = data.Poster === "N/A" ? "http://i.imgur.com/rXuQiCm.jpg?1" : data.Poster;
     $target.append("<img src=" + poster + "></img>");
     $target.append("<h1>" + data.Title + "</h1>");
     $target.append("<h2> Year: " + data.Year + "</h2>");
@@ -190,15 +184,16 @@ $movieDetails.on('click', '.add-movie', function() {
   //note: must be in this format because the .add-movie button is dynamically created
   var movie = $searchBar.value;
   var url = omdb_URL + "t=" + movie + "&r=json";
+  fbMovies = fb.child('users/'+userID+'/movies');
   $.get(url, function (data) {
-    $.post(FIREBASE_URL, JSON.stringify(data), function(res){
-      addTableDetail(data, res.name);
-      });
+    fbMovies.push(data);
     }, 'jsonp');
  });
 
 //function to append a row to the table
-function addTableDetail(data, id){
+function addTableDetail(obj){
+  var id = Object.keys(obj)[0];
+  var data = obj[id];
   $table.show();
   $table.append("<tr></tr>");
   var $target = $("tr:last");
@@ -211,15 +206,10 @@ function addTableDetail(data, id){
   $target.append("<td><button class='btn btn-success'>"+ "&#10003" +"</button></td>");
 }
 
-
 //deletes row from table and firebase
 $table.on('click', 'button', function(){
   var $movie = $(this).closest('tr');
   var $id = $movie.attr('data-id');
   $movie.remove();
-  var deleteURL = FIREBASE_URL.slice(0, -5) + '/' + $id + '.json';
-  $.ajax({
-  url: deleteURL,
-  type: 'DELETE'
-  });
+  fb.child('users/' + userID + '/movies/' + $id).set(null);
 })
