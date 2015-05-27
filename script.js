@@ -75,11 +75,12 @@ if(window.location.pathname === "/"){
     if(authData){
       $(".welcome").append("<h4>Welcome " + authData.password.email + "</h4>");
       userID = authData.uid;
+      userToken = authData.token;
     }
     else{
       window.location.pathname = "/login/login.html";
     }
-  })
+  });
 }
 
 $(".logout").click(function(){
@@ -113,41 +114,45 @@ function checkStatus(){
         $(".onTempPassword").addClass("hidden");
         $(".onLoggedOut").removeClass("hidden");
       }
-    })
-  }else{}
+    });
+  }
 }
 
 function saveUserData(authData){
   $.ajax({
     method: "PUT",
-    url: FIREBASE_AUTH + "users/" + authData.uid + "/profile.json",
+    url: FIREBASE_AUTH + "users/" + authData.uid + "/profile.json?auth=" + authData.token,
     data: JSON.stringify(authData),
     success: checkStatus
   })
 }
 
 
-// ==========start movie app Javascript==========
+// =====================================start movie app Javascript======================================
 
 var omdb_URL = 'http://www.omdbapi.com/?';
 var $searchForm = $('.search-form');
 var $searchBar = $('input[name=search]')[0];
-var FIREBASE_URL = "https://allthemovies.firebaseio.com/users/"+ userID +"/movies.json";
+var FIREBASE_URL = "https://allthemovies.firebaseio.com/users/"+ userID +"/movies.json?auth="+ userToken;
 var userID;
+var userToken;
 var $movieDetails = $(".movie-details");
 var $table = $("table");
 
 
-//function to get firebase data and add to table on page load
-$.get(FIREBASE_URL, function(data){
-  if (data===null){
-    $table.hide(); //hides table if firebase is empty
-  }else{
-    Object.keys(data).forEach(function(id){
-      addTableDetail(data[id], id);
-    });
-  }
-});
+//function to get firebase data and add to table on page load if logged in
+if(userID){
+  $.get(FIREBASE_URL, function(data){
+    if (data===null){
+      $table.hide(); //hides table if firebase is empty
+    }else{
+      Object.keys(data).forEach(function(id){
+        addTableDetail(data[id], id);
+      });
+    }
+  });
+}
+
 
 
 //function to retrieve movie JSON file and add to html
