@@ -78,7 +78,7 @@ if(window.location.pathname === "/"){
       userToken = authData.token;
     }
     else{
-      window.location.pathname = "login/login.html";
+      window.location.pathname = "/login/login.html";
     }
   });
 }
@@ -103,7 +103,7 @@ function doLogin(cb){
 }
 
 function checkStatus(){
-  if(window.location.pathname = "login/login.html"){
+  if(window.location.pathname = "/login/login.html"){
     fb.onAuth(function(authData){
       if(authData && authData.password.isTemporaryPassword){
         $(".onTempPassword").removeClass("hidden");
