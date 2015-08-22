@@ -70,7 +70,7 @@ $(".onTempPassword form").submit(function(){
 
 
 //if I'm on movie page and logged in --> Welcome and set user id. Else take me back to login
-if(window.location.pathname === "/myimdb"){
+if(window.location.pathname === "/myimdb/"){
   fb.onAuth(function(authData){
     if(authData){
       $(".welcome").append("<h4>Welcome " + authData.password.email + "</h4>");
@@ -109,7 +109,7 @@ function checkStatus(){
         $(".onTempPassword").removeClass("hidden");
         $(".onLoggedOut").addClass("hidden");
       } else if(authData){
-        window.location.pathname = "/myimdb";
+        window.location.pathname = "/myimdb/";
       } else{
         $(".onTempPassword").addClass("hidden");
         $(".onLoggedOut").removeClass("hidden");
