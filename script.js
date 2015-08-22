@@ -70,18 +70,16 @@ $(".onTempPassword form").submit(function(){
 
 
 //if I'm on movie page and logged in --> Welcome and set user id. Else take me back to login
-if(window.location.pathname === "/"){
-  fb.onAuth(function(authData){
-    if(authData){
-      $(".welcome").append("<h4>Welcome " + authData.password.email + "</h4>");
-      userID = authData.uid;
-      userToken = authData.token;
-    }
-    else{
-      window.location.pathname = "/login/login.html";
-    }
-  });
-}
+fb.onAuth(function(authData){
+  if(authData){
+    $(".welcome").append("<h4>Welcome " + authData.password.email + "</h4>");
+    userID = authData.uid;
+    userToken = authData.token;
+  }
+  else{
+    window.location.pathname = "/login/login.html";
+  }
+});
 
 $(".logout").click(function(){
   fb.unauth();
