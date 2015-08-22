@@ -70,16 +70,18 @@ $(".onTempPassword form").submit(function(){
 
 
 //if I'm on movie page and logged in --> Welcome and set user id. Else take me back to login
-fb.onAuth(function(authData){
-  if(authData){
-    $(".welcome").append("<h4>Welcome " + authData.password.email + "</h4>");
-    userID = authData.uid;
-    userToken = authData.token;
-  }
-  else{
-    window.location.pathname = "/login/login.html";
-  }
-});
+if(window.location.pathname === "/myimdb"){
+  fb.onAuth(function(authData){
+    if(authData){
+      $(".welcome").append("<h4>Welcome " + authData.password.email + "</h4>");
+      userID = authData.uid;
+      userToken = authData.token;
+    }
+    else{
+      window.location.pathname = "/myimdb/login/login.html";
+    }
+  });
+}
 
 $(".logout").click(function(){
   fb.unauth();
@@ -101,13 +103,13 @@ function doLogin(cb){
 }
 
 function checkStatus(){
-  if(window.location.pathname = "/login/login.html"){
+  if(window.location.pathname = "/myimdb/login/login.html"){
     fb.onAuth(function(authData){
       if(authData && authData.password.isTemporaryPassword){
         $(".onTempPassword").removeClass("hidden");
         $(".onLoggedOut").addClass("hidden");
       } else if(authData){
-        window.location.pathname = "/";
+        window.location.pathname = "/myimdb";
       } else{
         $(".onTempPassword").addClass("hidden");
         $(".onLoggedOut").removeClass("hidden");
