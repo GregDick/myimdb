@@ -126,7 +126,7 @@ function saveUserData(authData){
 
 // =====================================start movie app Javascript======================================
 
-var omdb_URL = 'http://crossorigin.me/http://www.omdbapi.com/?';
+var omdb_URL = 'http://www.omdbapi.com/?';
 var $searchForm = $('.search-form');
 var $searchBar = $('input[name=search]')[0];
 var FIREBASE_URL = FIREBASE_AUTH + "users/" + userID + "/movies.json?auth=" + userToken;
@@ -169,7 +169,7 @@ function addMovieDetail(data){
     $target.append("<h2>Sorry, never heard of it!</h2>");
   } else {
     $target.empty();
-    var poster = data.Poster === "N/A" ? "http://i.imgur.com/rXuQiCm.jpg?1" : data.Poster;
+    var poster = data.Poster === "N/A" ? "http://i.imgur.com/rXuQiCm.jpg?1" : 'http://crossorigin.me/' + data.Poster;
     $target.append("<img src=" + poster + "></img>");
     $target.append("<h1>" + data.Title + "</h1>");
     $target.append("<h2> Year: " + data.Year + "</h2>");
