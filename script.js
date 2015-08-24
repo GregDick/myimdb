@@ -198,7 +198,7 @@ function addTableDetail(obj){
   $table.append("<tr></tr>");
   var $target = $("tr:last");
   $target.attr("data-id", id);
-  var poster = data.Poster === "N/A" ? "http://i.imgur.com/rXuQiCm.jpg?1" : data.Poster;
+  var poster = data.Poster === "N/A" ? "http://i.imgur.com/rXuQiCm.jpg?1" : 'http://crossorigin.me/' + data.Poster;
   $target.append("<td><img src=" + poster + "></img></td>");
   $target.append("<td>"+ data.Title +"</td>");
   $target.append("<td>"+ data.Year +"</td>");
