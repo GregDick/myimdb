@@ -126,7 +126,7 @@ function saveUserData(authData){
 
 // =====================================start movie app Javascript======================================
 
-var omdb_URL = 'http://www.omdbapi.com/?';
+var omdb_URL = 'http://crossorigin.me/http://www.omdbapi.com/?';
 var $searchForm = $('.search-form');
 var $searchBar = $('input[name=search]')[0];
 var FIREBASE_URL = FIREBASE_AUTH + "users/" + userID + "/movies.json?auth=" + userToken;
